@@ -1,54 +1,74 @@
 package hash.table;
 
+// итератор для обхода хэш-таблицы
+// проходит только по занятым ячейкам (BUSY)
 public class HashTableIterator<K, V> {
-    private final Cell<K, V>[] table;
-    private final int index;
-    private final int m;
 
-    public HashTableIterator(Cell<K, V>[] table, int index, int m) {
+    private Cell<K, V>[] table;
+    private int currentIndex;
+    private int tableSize;
+
+    public HashTableIterator(Cell<K, V>[] table, int currentIndex, int tableSize) {
         this.table = table;
-        this.index = index;
-        this.m = m;
+        this.currentIndex = currentIndex;
+        this.tableSize = tableSize;
     }
 
-    public int getIndex() { return index; }
+    public int getIndex() {
+        return currentIndex;
+    }
 
+    // возвращает значение текущей ячейки
     public V getValue() {
-        if (index >= m || table[index].getStatus() != CellStatus.BUSY) {
-            throw new IllegalStateException("Iterator does not point to a BUSY cell");
+        if (currentIndex >= tableSize) {
+            throw new IllegalStateException("Итератор вышел за пределы таблицы");
         }
-        return table[index].getData();
+        if (table[currentIndex].getStatus() != CellStatus.BUSY) {
+            throw new IllegalStateException("Ячейка не занята");
+        }
+        return table[currentIndex].getData();
     }
 
+    // устанавливает значение текущей ячейки
     public void setValue(V val) {
-        if (index >= m || table[index].getStatus() != CellStatus.BUSY) {
-            throw new IllegalStateException("Iterator does not point to a BUSY cell");
+        if (currentIndex >= tableSize) {
+            throw new IllegalStateException("Итератор вышел за пределы таблицы");
         }
-        table[index].setData(val);
+        if (table[currentIndex].getStatus() != CellStatus.BUSY) {
+            throw new IllegalStateException("Ячейка не занята");
+        }
+        table[currentIndex].setData(val);
     }
 
-    /** Переход к следующей BUSY-ячейке. */
+    // переходим к следующей занятой ячейке
     public HashTableIterator<K, V> next() {
-        int next = index + 1;
-        while (next < m && table[next].getStatus() != CellStatus.BUSY) {
-            next++;
+        int nextIndex = currentIndex + 1;
+        // ищем следующую BUSY ячейку
+        while (nextIndex < tableSize && table[nextIndex].getStatus() != CellStatus.BUSY) {
+            nextIndex++;
         }
-        return new HashTableIterator<>(table, next, m);
+        return new HashTableIterator<>(table, nextIndex, tableSize);
+    }
+
+    // проверяем что итераторы не равны (для цикла)
+    public boolean notEquals(HashTableIterator<K, V> other) {
+        return this.currentIndex != other.currentIndex;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HashTableIterator<?, ?> other)) return false;
-        return this.index == other.index;
-    }
-
-    public boolean notEquals(HashTableIterator<K, V> other) {
-        return this.index != other.index;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof HashTableIterator)) {
+            return false;
+        }
+        HashTableIterator<?, ?> other = (HashTableIterator<?, ?>) obj;
+        return this.currentIndex == other.currentIndex;
     }
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(index);
+        return Integer.hashCode(currentIndex);
     }
 }
