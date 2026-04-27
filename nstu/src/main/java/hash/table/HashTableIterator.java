@@ -18,6 +18,17 @@ public class HashTableIterator<K, V> {
         return currentIndex;
     }
 
+    // возвращает ключ текущей ячейки
+    public K getKey() {
+        if (currentIndex >= tableSize) {
+            throw new IllegalStateException("Итератор вышел за пределы таблицы");
+        }
+        if (table[currentIndex].getStatus() != CellStatus.BUSY) {
+            throw new IllegalStateException("Ячейка не занята");
+        }
+        return table[currentIndex].getKey();
+    }
+
     // возвращает значение текущей ячейки
     public V getValue() {
         if (currentIndex >= tableSize) {

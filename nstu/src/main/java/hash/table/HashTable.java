@@ -207,6 +207,10 @@ public class HashTable<V> {
         return (double) elementCount / tableSize;
     }
 
+    public Cell<Integer, V>[] getCells() {
+        return table;
+    }
+
     // геттеры для диагностики
 
     public int getLastKeyOriginal() {

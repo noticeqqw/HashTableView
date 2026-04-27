@@ -1,0 +1,414 @@
+/* ── Base ──────────────────────────────────────────────── */
+.root {
+    -fx-base: #0a0a0a;
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+#app-root {
+    -fx-background-color: transparent;
+    -fx-background-image: url("background.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-padding: 20;
+}
+
+/* ── Header ────────────────────────────────────────────── */
+.header-bar {
+    -fx-background-color: rgba(0, 0, 0, 0.38);
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(255, 255, 255, 0.22)
+                      rgba(255, 255, 255, 0.08)
+                      rgba(255, 255, 255, 0.08)
+                      rgba(255, 255, 255, 0.08);
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-padding: 13 22 13 22;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 24, 0, 0, 4);
+}
+
+.app-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-style: italic;
+}
+
+.subtitle-label {
+    -fx-font-size: 15px;
+    -fx-text-fill: rgba(255, 255, 255, 0.60);
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+    -fx-padding: 2 0 0 8;
+}
+
+.stats-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(255, 255, 255, 0.88);
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+/* ── Button Panel ──────────────────────────────────────── */
+.button-panel {
+    -fx-background-color: rgba(0, 0, 0, 0.40);
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(255, 255, 255, 0.22)
+                      rgba(255, 255, 255, 0.08)
+                      rgba(255, 255, 255, 0.08)
+                      rgba(255, 255, 255, 0.08);
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-padding: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 22, 0, 0, 3);
+}
+
+.section-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: rgba(255, 255, 255, 0.50);
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+    -fx-letter-spacing: 1.5px;
+    -fx-padding: 6 0 2 4;
+}
+
+/* ── Action Buttons ────────────────────────────────────── */
+.action-btn {
+    -fx-background-color: rgba(255, 255, 255, 0.09);
+    -fx-text-fill: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 9999;
+    -fx-border-color: rgba(255, 255, 255, 0.20);
+    -fx-border-radius: 9999;
+    -fx-border-width: 1;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-padding: 8 16 8 16;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+.action-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.17);
+    -fx-border-color: rgba(255, 255, 255, 0.38);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.10), 8, 0, 0, 0);
+}
+
+.action-btn:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.26);
+    -fx-border-color: rgba(255, 255, 255, 0.50);
+}
+
+.action-btn-primary {
+    -fx-background-color: rgba(255, 255, 255, 0.90);
+    -fx-text-fill: #000;
+    -fx-font-weight: 700;
+    -fx-border-color: transparent;
+    -fx-alignment: CENTER;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.25), 12, 0, 0, 0);
+}
+
+.action-btn-primary:hover {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.40), 16, 0, 0, 0);
+}
+
+/* ── Input Pane ────────────────────────────────────────── */
+.input-pane {
+    -fx-background-color: rgba(0, 0, 0, 0.42);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.25)
+                      rgba(255, 255, 255, 0.10)
+                      rgba(255, 255, 255, 0.10)
+                      rgba(255, 255, 255, 0.10);
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 16, 0, 0, 2);
+}
+
+.input-title {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(255, 255, 255, 0.80);
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+.glass-input {
+    -fx-background-color: rgba(255, 255, 255, 0.10);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.42);
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(255, 255, 255, 0.20);
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 14px;
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+    -fx-highlight-fill: rgba(255, 255, 255, 0.22);
+    -fx-highlight-text-fill: white;
+}
+
+.glass-input:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.16);
+    -fx-border-color: rgba(255, 255, 255, 0.50);
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.12), 10, 0, 0, 0);
+}
+
+/* ── TableView ─────────────────────────────────────────── */
+.glass-table {
+    -fx-background-color: rgba(0, 0, 0, 0.36);
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+    -fx-table-cell-border-color: rgba(255, 255, 255, 0.07);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 20, 0, 0, 3);
+}
+
+.glass-table .column-header-background {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-background-radius: 14 14 0 0;
+}
+
+.glass-table .column-header,
+.glass-table .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent rgba(255,255,255,0.14) transparent;
+    -fx-border-width: 1;
+    -fx-size: 42px;
+}
+
+.glass-table .column-header .label {
+    -fx-text-fill: rgba(255, 255, 255, 0.80);
+    -fx-font-size: 13px;
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+.glass-table .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent rgba(255,255,255,0.06) transparent;
+    -fx-border-width: 1;
+    -fx-font-size: 13px;
+    -fx-font-family: "Menlo", "Courier New", monospace;
+}
+
+.glass-table .table-row-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.025);
+}
+
+.glass-table .table-row-cell:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.13);
+}
+
+.glass-table .table-row-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+}
+
+.glass-table .table-cell {
+    -fx-text-fill: rgba(255, 255, 255, 0.92);
+    -fx-padding: 6 10 6 10;
+    -fx-border-color: transparent;
+    -fx-font-size: 13px;
+    -fx-font-family: "Menlo", "Courier New", monospace;
+}
+
+.glass-table .table-cell:selected {
+    -fx-text-fill: white;
+}
+
+/* Cell status colours */
+.cell-busy {
+    -fx-text-fill: #7dffaa;
+    -fx-font-weight: bold;
+}
+
+.cell-deleted {
+    -fx-text-fill: #ff6b6b;
+}
+
+.cell-free {
+    -fx-text-fill: rgba(255, 255, 255, 0.28);
+}
+
+/* Empty-table placeholder */
+.glass-table .placeholder .label {
+    -fx-text-fill: rgba(255, 255, 255, 0.45);
+    -fx-font-size: 14px;
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+/* Scroll bars inside table */
+.glass-table .virtual-flow .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.glass-table .virtual-flow .scroll-bar .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-background-radius: 9999;
+}
+
+.glass-table .virtual-flow .scroll-bar .track,
+.glass-table .virtual-flow .scroll-bar .track-background {
+    -fx-background-color: transparent;
+}
+
+.glass-table .virtual-flow .scroll-bar .increment-button,
+.glass-table .virtual-flow .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+}
+
+.glass-table .virtual-flow .scroll-bar .increment-arrow,
+.glass-table .virtual-flow .scroll-bar .decrement-arrow {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* ── Log Area ──────────────────────────────────────────── */
+.log-area {
+    -fx-background-color: rgba(0, 0, 0, 0.38);
+    -fx-background-radius: 14;
+    -fx-border-color: rgba(255, 255, 255, 0.22)
+                      rgba(255, 255, 255, 0.08)
+                      rgba(255, 255, 255, 0.08)
+                      rgba(255, 255, 255, 0.08);
+    -fx-border-width: 1;
+    -fx-border-radius: 14;
+    -fx-text-fill: rgba(255, 255, 255, 0.95);
+    -fx-font-size: 14px;
+    -fx-font-family: "Menlo", "Courier New", monospace;
+    -fx-highlight-fill: rgba(255, 255, 255, 0.18);
+    -fx-highlight-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 20, 0, 0, 3);
+}
+
+.log-area .content {
+    -fx-background-color: transparent;
+    -fx-background-radius: 14;
+}
+
+.log-area .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-radius: 14;
+}
+
+.log-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.log-area .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.log-area .scroll-bar .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.22);
+    -fx-background-radius: 9999;
+}
+
+.log-area .scroll-bar .track,
+.log-area .scroll-bar .track-background {
+    -fx-background-color: transparent;
+}
+
+.log-area .scroll-bar .increment-button,
+.log-area .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+}
+
+.log-area .scroll-bar .increment-arrow,
+.log-area .scroll-bar .decrement-arrow {
+    -fx-background-color: rgba(255, 255, 255, 0.22);
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* ── Diagnostics bar ───────────────────────────────────── */
+.diag-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.70);
+    -fx-font-family: "Menlo", "Courier New", monospace;
+    -fx-padding: 4 14 2 14;
+}
+
+/* ── Checkbox ──────────────────────────────────────────── */
+.glass-checkbox .box {
+    -fx-background-color: rgba(255, 255, 255, 0.10);
+    -fx-border-color: rgba(255, 255, 255, 0.30);
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.glass-checkbox:selected .box {
+    -fx-background-color: rgba(255, 255, 255, 0.88);
+}
+
+.glass-checkbox .mark {
+    -fx-background-color: #000;
+}
+
+.glass-checkbox .label {
+    -fx-text-fill: rgba(255, 255, 255, 0.88);
+    -fx-font-size: 14px;
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+/* ── Hint ──────────────────────────────────────────────── */
+.hint-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.50);
+    -fx-font-family: "System";
+    -fx-font-weight: 600;
+}
+
+/* ── Button ScrollPane ─────────────────────────────────── */
+.btn-scroll {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.btn-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6px;
+}
+
+.btn-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.20);
+    -fx-background-radius: 9999;
+}
+
+.btn-scroll .scroll-bar:vertical .track,
+.btn-scroll .scroll-bar:vertical .track-background {
+    -fx-background-color: transparent;
+}
+
+.btn-scroll .scroll-bar:vertical .increment-button,
+.btn-scroll .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.btn-scroll .scroll-bar:vertical .increment-arrow,
+.btn-scroll .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+.btn-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ── Separator ─────────────────────────────────────────── */
+.separator .line {
+    -fx-border-color: rgba(255, 255, 255, 0.14);
+    -fx-border-width: 1;
+}
