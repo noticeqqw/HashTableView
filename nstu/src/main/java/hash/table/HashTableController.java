@@ -1,5 +1,6 @@
 package hash.table;
 
+import hash.table.StyledDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -13,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public class HashTableController {
 
@@ -47,11 +49,8 @@ public class HashTableController {
     // ── Init dialog ────────────────────────────────────────────────────────────
 
     private int askTableSize() {
-        TextInputDialog td = new TextInputDialog("20");
-        td.setTitle("Hash Table");
-        td.setHeaderText(null);
-        td.setContentText("Ёмкость таблицы (желаемое кол-во элементов):");
-        Optional<String> r = td.showAndWait();
+        Optional<String> r = StyledDialog.showInputDialog(null, "Hash Table",
+            "Ёмкость таблицы (желаемое кол-во элементов):", "20");
         try {
             return Integer.parseInt(r.orElse("20").trim());
         } catch (NumberFormatException e) {
@@ -441,17 +440,11 @@ public class HashTableController {
     }
 
     private void onClear() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Подтверждение");
-        alert.setHeaderText(null);
-        alert.setContentText("Очистить таблицу?");
-        alert.showAndWait().ifPresent(btn -> {
-            if (btn == ButtonType.OK) {
-                table.clear();
-                log("Таблица очищена.");
-                refreshTable();
-            }
-        });
+        if (StyledDialog.showConfirmDialog(root.getScene().getWindow(), "Подтверждение", "Очистить таблицу?")) {
+            table.clear();
+            log("Таблица очищена.");
+            refreshTable();
+        }
     }
 
     private void onChiSquare() {
