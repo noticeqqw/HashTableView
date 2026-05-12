@@ -235,7 +235,7 @@ public class HashTable<V> {
         return keyPrime % tableSize;
     }
 
-    // линейное зондирование: h(k') + i
+    // линейное хэширование: h(k') + i
     private int linearProbe(int hashIndex, int i) {
         return (hashIndex + i) % tableSize;
     }
