@@ -1,5 +1,8 @@
 package hash.table;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // основной класс хэш-таблицы с открытой адресацией (линейное зондирование)
 @SuppressWarnings("unchecked")
 public class HashTable<V> {
@@ -244,6 +247,41 @@ public class HashTable<V> {
         this.lastKeyOriginal = key;
         this.lastKeyPrime = keyPrime;
         this.lastHashIndex = hashIndex;
+    }
+
+    // симулирует вставку без изменения таблицы — возвращает шаги зондирования
+    // каждый элемент: {tableIndex, probeType}
+    // probeType: 0=коллизия, 1=удалённая(проход), 2=свободная(посадка), 3=дубликат, 4=удалённая(посадка)
+    public List<int[]> simulateInsert(int key) {
+        int keyPrime = KeyConverter.toNatural(key);
+        int hashIndex = calculateHash(keyPrime);
+        List<int[]> steps = new ArrayList<>();
+        int insertPosition = -1;
+
+        for (int i = 0; i < tableSize; i++) {
+            int pos = linearProbe(hashIndex, i);
+            CellStatus st = table[pos].getStatus();
+
+            if (st == CellStatus.BUSY) {
+                if (table[pos].getKey() == key) {
+                    steps.add(new int[]{pos, 3});
+                    return steps;
+                }
+                steps.add(new int[]{pos, 0});
+            } else if (st == CellStatus.DELETED) {
+                if (insertPosition == -1) {
+                    insertPosition = pos;
+                    steps.add(new int[]{pos, 4});
+                } else {
+                    steps.add(new int[]{pos, 1});
+                }
+            } else {
+                if (insertPosition == -1) insertPosition = pos;
+                steps.add(new int[]{pos, 2});
+                break;
+            }
+        }
+        return steps;
     }
 
     // находим подходящий размер таблицы из массива чисел Мерсенна

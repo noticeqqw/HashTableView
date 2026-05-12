@@ -1,5 +1,6 @@
 hash/table/Cell.class
 hash/table/StyledDialog.class
+hash/table/HashTableController$2.class
 hash/table/Main.class
 hash/table/HashTable.class
 hash/table/KeyConverter.class

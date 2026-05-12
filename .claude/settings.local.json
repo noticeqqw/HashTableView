@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(mvn compile *)",
-      "Bash(curl -L -o '/Users/noticeqqw/main/Учеба/3 курс 2 семестр/Алгоритмы и Структуры/Лабораторная 4/nstu/src/main/resources/Montserrat-SemiBold.ttf' https://github.com/google/fonts/raw/main/ofl/montserrat/static/Montserrat-SemiBold.ttf --progress-bar)",
-      "Bash(echo \"exit: $?\")"
-    ]
-  }
-}

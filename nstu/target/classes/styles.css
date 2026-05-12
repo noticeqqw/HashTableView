@@ -235,6 +235,35 @@
     -fx-text-fill: rgba(255, 255, 255, 0.28);
 }
 
+/* Probe animation row highlights */
+.glass-table .table-row-cell.probe-collision {
+    -fx-background-color: rgba(255, 140, 0, 0.28);
+    -fx-border-color: rgba(255, 140, 0, 0.70) transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(255, 140, 0, 0.45), 10, 0, 0, 0);
+}
+
+.glass-table .table-row-cell.probe-deleted {
+    -fx-background-color: rgba(255, 220, 50, 0.20);
+    -fx-border-color: rgba(255, 220, 50, 0.55) transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(255, 220, 50, 0.30), 8, 0, 0, 0);
+}
+
+.glass-table .table-row-cell.probe-landing {
+    -fx-background-color: rgba(80, 255, 140, 0.28);
+    -fx-border-color: rgba(80, 255, 140, 0.75) transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(80, 255, 140, 0.55), 14, 0, 0, 0);
+}
+
+.glass-table .table-row-cell.probe-duplicate {
+    -fx-background-color: rgba(255, 70, 70, 0.28);
+    -fx-border-color: rgba(255, 70, 70, 0.70) transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(255, 70, 70, 0.45), 10, 0, 0, 0);
+}
+
 /* Empty-table placeholder */
 .glass-table .placeholder .label {
     -fx-text-fill: rgba(255, 255, 255, 0.45);

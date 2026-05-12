@@ -1,6 +1,8 @@
 package hash.table;
 
 import hash.table.StyledDialog;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -9,10 +11,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.util.Duration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -33,6 +39,9 @@ public class HashTableController {
     private Label inputTitle;
     private Runnable confirmAction;
     private CheckBox showAllCells;
+
+    private final Map<Integer, String> probeHighlights = new LinkedHashMap<>();
+    private boolean animationRunning = false;
 
     public HashTableController(Stage stage) {
         int n = askTableSize();
@@ -108,6 +117,21 @@ public class HashTableController {
         tableView.getStyleClass().add("glass-table");
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         VBox.setVgrow(tableView, Priority.ALWAYS);
+
+        tableView.setRowFactory(tv -> new TableRow<CellRow>() {
+            @Override
+            protected void updateItem(CellRow item, boolean empty) {
+                super.updateItem(item, empty);
+                getStyleClass().removeAll("probe-collision", "probe-deleted", "probe-landing", "probe-duplicate");
+                if (!empty && item != null) {
+                    try {
+                        int idx = Integer.parseInt(item.indexProperty().get());
+                        String cls = probeHighlights.get(idx);
+                        if (cls != null) getStyleClass().add(cls);
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+        });
 
         cellData = FXCollections.observableArrayList();
         tableView.setItems(cellData);
@@ -343,6 +367,7 @@ public class HashTableController {
     // ── Actions ────────────────────────────────────────────────────────────────
 
     private void onInsert() {
+        if (animationRunning) return;
         showInput("Вставить элемент", true, () -> {
             String ks = keyField.getText().trim();
             String ds = dataField.getText().trim();
@@ -350,17 +375,88 @@ public class HashTableController {
             if (ds.isEmpty()) { log("Ошибка: введите данные."); return; }
             try {
                 int key = Integer.parseInt(ks);
-                boolean ok = table.insert(key, ds);
-                log(ok ? "✓ Вставлено: key=" + key + "  data=\"" + ds + "\""
-                       : "✗ Не вставлено — дубликат или таблица полна.");
-                updateDiag();
-                refreshTable();
+                List<int[]> steps = table.simulateInsert(key);
+
+                if (steps.size() <= 1) {
+                    // нет коллизий — вставляем сразу
+                    boolean ok = table.insert(key, ds);
+                    log(ok ? "✓ Вставлено: key=" + key + "  data=\"" + ds + "\""
+                           : "✗ Не вставлено — дубликат или таблица полна.");
+                    updateDiag();
+                    refreshTable();
+                    hideInput();
+                    return;
+                }
+
+                // есть коллизии — показываем анимацию зондирования
+                animationRunning = true;
                 hideInput();
+
+                // включаем показ всех ячеек чтобы были видны FREE-ячейки
+                boolean wasShowAll = showAllCells.isSelected();
+                showAllCells.setSelected(true);
+                refreshTable();
+
+                int kp = KeyConverter.toNatural(key);
+                log(String.format("── Вставка key=%d  k'=%d  h(k')=%d  шагов=%d ──",
+                        key, kp, kp % table.size(), steps.size()));
+
+                Timeline tl = new Timeline();
+                for (int i = 0; i < steps.size(); i++) {
+                    final int stepIdx = i;
+                    KeyFrame kf = new KeyFrame(Duration.millis(950 * (i + 1)), e -> {
+                        int[] s = steps.get(stepIdx);
+                        int tableIdx = s[0];
+                        int type = s[1];
+                        probeHighlights.put(tableIdx, probeStyleClass(type));
+                        tableView.refresh();
+                        log(probeStepLabel(stepIdx + 1, tableIdx, type));
+                    });
+                    tl.getKeyFrames().add(kf);
+                }
+
+                tl.setOnFinished(e -> {
+                    boolean ok = table.insert(key, ds);
+                    log(ok ? "✓ Вставлено: key=" + key + "  data=\"" + ds + "\""
+                           : "✗ Не вставлено — дубликат или таблица полна.");
+                    updateDiag();
+                    probeHighlights.clear();
+                    showAllCells.setSelected(wasShowAll);
+                    animationRunning = false;
+                    refreshTable();
+                });
+
+                tl.play();
+
             } catch (NumberFormatException e) {
                 log("Ошибка: ключ должен быть целым числом.");
             }
         });
     }
+
+    private String probeStyleClass(int type) {
+        return switch (type) {
+            case 0 -> "probe-collision";
+            case 1 -> "probe-deleted";
+            case 2 -> "probe-landing";
+            case 3 -> "probe-duplicate";
+            case 4 -> "probe-landing";
+            default -> "";
+        };
+    }
+
+    private String probeStepLabel(int step, int tableIdx, int type) {
+        String desc = switch (type) {
+            case 0 -> "ЗАНЯТА — коллизия";
+            case 1 -> "УДАЛЕНА — пропускаем";
+            case 2 -> "СВОБОДНА — вставляем сюда";
+            case 3 -> "ЗАНЯТА — дубликат ключа";
+            case 4 -> "УДАЛЕНА — вставляем сюда";
+            default -> "?";
+        };
+        return String.format("  Зонд %d: ячейка [%d] — %s", step, tableIdx, desc);
+    }
+
 
     private void onSearch() {
         showInput("Найти элемент", false, () -> {
